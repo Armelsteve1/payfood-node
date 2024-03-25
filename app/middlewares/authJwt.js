@@ -62,13 +62,13 @@ const isUser = (req, res, next) => {
       }
 
       for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "user") {
+        if (roles[i].name === "") {
           next();
           return;
         }
       }
 
-      res.status(403).send({ message: "Nécessite le rôle de user !" });
+      res.status(403).send({ message: "Nécessite le rôle de User !" });
     });
   });
 };
