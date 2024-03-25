@@ -27,7 +27,7 @@ L'application est accessible à l'adresse suivante : `http://localhost:8080`. As
 
 - [x] Authentification jwt token & role 
 - [x] Crud restauant & menu
-- [ ] Point fidéliter (en cours de développement)
+- [ ] Points fidélités (en cours de développement)
 
 
 ## Auteurs
