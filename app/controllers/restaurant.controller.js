@@ -49,7 +49,6 @@ exports.updateRestaurant = (req, res) => {
   if (!req.body.name || !req.body.address || !req.body.description) {
     return res.status(400).send({ message: "Tous les champs doivent être remplis !" });
   }
-
   Restaurant.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, data) => {
     if (err) {
       res.status(500).send({ message: err });
