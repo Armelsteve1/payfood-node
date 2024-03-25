@@ -1,5 +1,5 @@
-require('dotenv').config()
+require('dotenv').config();
 
 module.exports = {
-    secret:"armel-secret-key"
-  };
+  url: process.env.MONGODB_URL
+};

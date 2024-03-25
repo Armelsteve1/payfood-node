@@ -1,35 +1,23 @@
-const { ROLES, user } = require("../models");
-const User = user;
+const db = require("../models");
+const ROLES = db.ROLES;
+const User = db.user;
 
-const checkDuplicateUsernameOrEmail = (req, res, next) => {
-  User.findOne({
-    username: req.body.username
-  }).exec((err, user) => {
-    if (err) {
-      res.status(500).send({ message: err });
-      return;
+const checkDuplicateUsernameOrEmail = async (req, res, next) => {
+  try {
+    const usernameUser = await User.findOne({ username: req.body.username }).exec();
+    if (usernameUser) {
+      return res.status(400).send({ message: "Failed! Username is already in use!" });
     }
 
-    if (user) {
-      res.status(400).send({ message: "Failed! Username is already in use!" });
-      return;
+    const emailUser = await User.findOne({ email: req.body.email }).exec();
+    if (emailUser) {
+      return res.status(400).send({ message: "Failed! Email is already in use!" });
     }
 
-    User.findOne({
-      email: req.body.email
-    }).exec((err, user) => {
-      if (err) {
-        res.status(500).send({ message: err });
-        return;
-      }
-      if (user) {
-        res.status(400).send({ message: "Failed! Email is already in use!" });
-        return;
-      }
-
-      next();
-    });
-  });
+    next();
+  } catch (err) {
+    res.status(500).send({ message: err.message || "Some error occurred while checking duplicate username or email." });
+  }
 };
 
 const checkRolesExisted = (req, res, next) => {

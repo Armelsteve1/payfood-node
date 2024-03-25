@@ -29,16 +29,16 @@ connect(url, {
     process.exit();
   });
 
-// simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to your application." });
 });
 
-// routes
-require("./app/routes/auth.routes")(app);
-require("./app/routes/user.routes")(app);
+const restaurantRoutes = require("./app/routes/restaurant.routes");
+const menuRoutes = require("./app/routes/menu.routes");
 
-// set port, listen for requests
+restaurantRoutes(app);
+menuRoutes(app);
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
@@ -49,7 +49,7 @@ function initial() {
     .then(count => {
       if (count === 0) {
         new Role({
-          name: "user"
+          name: "allAccess"
         }).save()
           .then(() => {
             console.log("Added 'user' to roles collection");
@@ -59,20 +59,20 @@ function initial() {
           });
 
         new Role({
-          name: "moderator"
+          name: "restaurateur"
         }).save()
           .then(() => {
-            console.log("Added 'moderator' to roles collection");
+            console.log("Added 'restaurateur' to roles collection");
           })
           .catch(err => {
             console.error("Error:", err);
           });
 
         new Role({
-          name: "admin"
+          name: "user"
         }).save()
           .then(() => {
-            console.log("Added 'admin' to roles collection");
+            console.log("Added 'user' to roles collection");
           })
           .catch(err => {
             console.error("Error:", err);

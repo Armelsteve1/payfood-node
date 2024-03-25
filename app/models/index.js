@@ -7,7 +7,9 @@ db.mongoose = mongoose;
 
 db.user = require("./user.model");
 db.role = require("./role.model");
+db.restaurant = require("./restaurant.model");
+db.menu = require("./menu.model");
 
-db.ROLES = ["user", "admin", "moderator"];
+db.ROLES = ["allAccess", "restaurateur", "user"];
 
 module.exports = db;
